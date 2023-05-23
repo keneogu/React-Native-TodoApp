@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Alert } from "react-native";
 import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 import AddTodo from "./components/AddTodo";
@@ -18,9 +18,16 @@ export default function App() {
   }
 
   const addTodo = (item) => {
-    setTodos((prev) => {
-      return [...prev, { text: item, key: Math.random().toString()}]
-    })
+    if(item.length > 5) {
+      setTodos((prev) => {
+        return [...prev, { text: item, key: Math.random().toString()}]
+      })
+    }else {
+      Alert.alert('00PS', 'Todos must be over 5 characters long', [
+        {text: 'OK', onPress: () => console.log('alert closed')}
+      ])
+    }
+
   }
 
   return (

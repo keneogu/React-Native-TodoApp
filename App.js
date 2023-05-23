@@ -1,28 +1,39 @@
 import React, { useState } from "react";
-// import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
+import Header from "./components/Header";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
 
 export default function App() {
+  const [todos, setTodos] = useState([
+    { text: 'buy coffee', key: '1'},
+    { text: 'create a crate', key: '2'},
+    { text: 'study the good news', key: '3'},
+  ])
+
+  const pressHandler = (key) => {
+    setTodos((prev) => {
+      return prev.filter((item) => item.key !== key)
+    })
+  }
+
+  const addTodo = (item) => {
+    setTodos((prev) => {
+      return [...prev, { text: item, key: Math.random().toString()}]
+    })
+  }
 
   return (
     <View style={styles.container}>
-      <FlatList 
-        numColumns={2}
-        keyExtractor={(item) => item.id}
-        data={people}
-        renderItem={({item}) => (
-          <TouchableOpacity onPress={() => pressHandler(item.id)}>
-            <Text style={styles.listItem}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-      {/* <ScrollView>
-              { people.map(item => (
-        <View key={item.key}>
-          <Text style={styles.listItem}>{item.name}</Text>
+      <Header />
+      <View style={styles.content}>
+        <AddTodo addTodo={addTodo}/>
+        <View style={styles.list}>
+          <FlatList data={todos} renderItem={({item}) => (
+            <TodoList item={item} pressHandler={pressHandler}/>
+          )} />
         </View>
-    ))}
-      </ScrollView> */}
+      </View>
     </View>
   );
 }
@@ -31,24 +42,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
-  input: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#777",
-    padding: 30,
-    margin: 10,
-    width: 200,
+  content: {
+    padding: 40
   },
-  listItem: {
-    backgroundColor: '#657',
-    width: 150,
-    height: 150,
-    margin: 5,
-    fontSize: 24,
-    padding: 30,
+  list: {
+    marginTop: 8,
   }
 });

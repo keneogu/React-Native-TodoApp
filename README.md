@@ -4,7 +4,7 @@ This is a reactNative TodoApp, where you can add the list of your todaos and del
 
 
 ## Screenshot
-![App screenshot](app/assets/Screenshot.jpg)
+![App screenshot](assets/Screenshot.jpg)
 
 
 ## Built With
